@@ -10,6 +10,19 @@ services:
       dockerfile: 171701_api/Dockerfile
     ports:
       - 8081:80
+        
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: rabbitmq:management
+    hostname: rabbitmq.local
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      common_network:
+        aliases:
+          - rabbitmq.local
+      
   sample-prod:
     container_name: sample-prod
     image: sample:prod
@@ -17,3 +30,16 @@ services:
       - '1337:80'
     depends_on:
       - 171701api
+      - rabbitmq
+
+  generator_new_name:
+    build:
+      context: .
+      dockerfile: generator/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      common_network:
+        
+networks:
+  common_network:
