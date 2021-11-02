@@ -10,3 +10,10 @@ services:
       dockerfile: 171701_api/Dockerfile
     ports:
       - 8081:80
+  sample-prod:
+    container_name: sample-prod
+    image: sample:prod
+    ports:
+      - '1337:80'
+    depends_on:
+      - 171701api
