@@ -45,14 +45,14 @@
                 "build"
             ],
             "dockerBuild": {
-                "tag": "dotnet:dev",
+                "tag": "sinetprojekt:dev",
                 "target": "base",
-                "dockerfile": "${workspaceFolder}/171701_api/Dockerfile",
+                "dockerfile": "${workspaceFolder}/front/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/171701_api/171701_api.csproj"
+                "appProject": "${workspaceFolder}/front/front.csproj"
             }
         },
         {
@@ -62,13 +62,13 @@
                 "build"
             ],
             "dockerBuild": {
-                "tag": "dotnet:latest",
-                "dockerfile": "${workspaceFolder}/171701_api/Dockerfile",
+                "tag": "sinetprojekt:latest",
+                "dockerfile": "${workspaceFolder}/front/Dockerfile",
                 "context": "${workspaceFolder}",
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/171701_api/171701_api.csproj"
+                "appProject": "${workspaceFolder}/front/front.csproj"
             }
         },
         {
@@ -79,7 +79,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/171701_api/171701_api.csproj",
+                "appProject": "${workspaceFolder}/front/front.csproj",
                 "enableDebugging": true,
                 "configureSsl": false
             }
@@ -92,7 +92,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/171701_api/171701_api.csproj"
+                "appProject": "${workspaceFolder}/front/front.csproj"
             }
         }
     ]
