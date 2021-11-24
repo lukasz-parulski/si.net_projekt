@@ -1,45 +1,50 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
 
-version: '3.4'
+version: '3.9'
 
 services:
-  171701api:
-    image: 171701api
+  api:
+    image: 10.40.71.55:5000/si_171701_api
     build:
       context: .
-      dockerfile: 171701_api/Dockerfile
-    ports:
-      - 8081:80
-        
-  rabbitmq:
-    container_name: "rabbitmq"
-    image: rabbitmq:management
-    hostname: rabbitmq.local
-    ports:
-      - '5672:5672'
-      - '15672:15672'
+      dockerfile: api/Dockerfile
     networks:
-      common_network:
-        aliases:
-          - rabbitmq.local
-      
-  sample-prod:
-    container_name: sample-prod
-    image: sample:prod
-    ports:
-      - '1337:80'
+      - common_network
     depends_on:
-      - 171701api
       - rabbitmq
+      
+  front:
+    image: 10.40.71.55:5000/si_171701_front
+    build:
+      context: .
+      dockerfile: front/Dockerfile
+    networks:
+      - common_network
+    depends_on:
+      - api
+    ports:
+      - '17170:80'
 
-  generator_new_name:
+  generator:
+    image: 10.40.71.55:5000/si_171701_generator
     build:
       context: .
       dockerfile: generator/Dockerfile
     depends_on:
       - rabbitmq
     networks:
+      - common_network
+        
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: rabbitmq:management
+    hostname: rabbitmq.local
+    ports:
+      - '17171:15672'
+    networks:
       common_network:
+        aliases:
+          - rabbitmq.local
         
 networks:
   common_network:
