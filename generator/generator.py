@@ -11,7 +11,7 @@ PRESSURE_MIN = 800 # w hPa +-100
 PRESSURE_MAX = 1000 # w hPa +-100
 BEARS_MIN = 0 # w misiach polarnych
 BEARS_MAX = 6 # w misiach polarnych
-TIMES_PER_SEC = 200 # liczba sendów na sekundę
+TIMES_PER_SEC = 80 # liczba sendów na sekundę
 T = 1/(TIMES_PER_SEC + 3)
 HOW_LONG_IN_MIN = 3 # przez ile minut ma trwać program
 
@@ -33,12 +33,25 @@ def generate(type, minVal, maxVal, queue, host):
         if random.random() < 0.45:
             x -= x1
         else:
-            x += x1            
+            x += x1         
         if type != "bears":
-            channel.basic_publish(exchange='', routing_key=queue, body=f"{x}: {i}")
+            for j in range(7):
+                x1 = random.random() - 0.5
+                x += (x1/10)   
+                channel.basic_publish(exchange='', routing_key=queue, body=f"{j}${x} #{i}")
         else :
-            channel.basic_publish(exchange='', routing_key=queue, body=f"{int(x)}: {i}")
-        time.sleep(T-(time.time()-s1))
+            for j in range(7):
+                x1 = random.random() - 0.5
+                if x1 < -0.4:
+                    x -= 1
+                elif x1 > 0.4:
+                    x += 1
+                if x < 0 :
+                    x = 0
+                channel.basic_publish(exchange='', routing_key=queue, body=f"{j}${int(x)} #{i}")
+        t_end = T-(time.time()-s1)
+        if t_end > 0:
+            time.sleep(t_end)
     connection.close()
     print(f"{type} generator end")
 
