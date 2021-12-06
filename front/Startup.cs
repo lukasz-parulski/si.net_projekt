@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using front.Models;
+using front.Services;
 
 namespace front
 {
@@ -24,6 +26,7 @@ namespace front
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddScoped<ExportService<WeatherForecast>>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

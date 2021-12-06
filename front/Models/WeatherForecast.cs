@@ -1,6 +1,6 @@
 using System;
 
-namespace api
+namespace front.Models
 {
     public class WeatherForecast
     {

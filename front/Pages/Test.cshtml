@@ -1,0 +1,26 @@
+﻿@page
+@model TestModel
+<div style="width:400px;">
+    <canvas id="myChart"></canvas>
+</div>
+
+@section scripts{
+    <script src="~/js/Chart.js"></script>
+    <script>
+        var labels = @Html.Raw(Json.Serialize(Model.xd));
+        var data = @Html.Raw(Json.Serialize(Model.xdd));
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'demo',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: data
+                }]
+            }
+        });
+    </script>
+}
