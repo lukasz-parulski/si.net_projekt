@@ -1,16 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using api.Rabbit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MongoDB.Driver;
+using RabbitMQ.Client;
 
 namespace api
 {
@@ -32,6 +29,17 @@ namespace api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
+            services.AddSingleton(serviceProvider =>
+            {
+                var uri = new Uri("amqp://guest:guest@rabbitmq.local:5672");
+                return new ConnectionFactory
+                {
+                    Uri = uri,
+                    DispatchConsumersAsync = true
+                };
+            });
+            services.AddSingleton(new MongoClient(Environment.GetEnvironmentVariable("MONGODB_CONNECTION_STRING")));
+            services.AddHostedService<RabbitMqConsumer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

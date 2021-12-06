@@ -8,10 +8,16 @@ services:
     build:
       context: .
       dockerfile: api/Dockerfile
+    environment:
+      MONGODB_CONNECTION_STRING: "mongodb://root:example@mongodb_dev:27017/"
+      DB_NAME: "171701"
     networks:
       - common_network
+    ports:
+      - '17172:80'
     depends_on:
       - rabbitmq
+      - mongodb_dev
       
   front:
     image: 10.40.71.55:5000/si_171701_front
@@ -32,6 +38,7 @@ services:
       dockerfile: generator/Dockerfile
     depends_on:
       - rabbitmq
+      - mongodb_dev
     networks:
       - common_network
         
@@ -45,6 +52,27 @@ services:
       common_network:
         aliases:
           - rabbitmq.local
+        
+  mongodb_dev:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - common_network
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongodb_dev:27017/
+    networks:
+      - common_network
         
 networks:
   common_network:
