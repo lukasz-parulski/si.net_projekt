@@ -44,12 +44,12 @@ def generate(type, minVal, maxVal, host):
         else:
             x += x1         
         if type != "bears":
-            for j in range(7):
+            for j in range(1,8):
                 x1 = random.random() - 0.5
                 x += (x1/10)   
                 channel.basic_publish(exchange='', routing_key=QUEUE_NAME, body=f"{type};{j};{x}")
         else :
-            for j in range(7):
+            for j in range(1,8):
                 x1 = random.random() - 0.5
                 if x1 < -0.4:
                     x -= 1

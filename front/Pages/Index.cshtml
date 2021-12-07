@@ -6,7 +6,16 @@
 
 <a href="temperature.csv" download>Pobierz CSV</a>
 <a href="temperature.json" download>Pobierz JSON</a>
-            <div style="width:100%;margin-left: auto;margin-right: auto;">
+<select name="number">
+    <option value="0">Select a number</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+</select>
+<form><button type="submit">Filtruj</button></form>
+<a asp-page="/" asp-route-myId=1>Filtruj</a>
+
+<div style="width:100%;margin-left: auto;margin-right: auto;">
     <canvas id="myChart"></canvas>
 </div>
 

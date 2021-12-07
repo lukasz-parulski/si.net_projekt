@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "UL6mpGgS5w4+NuTCHXmDfyIeugHcMCvnRdme6b3sgQqO3z4g8wJjYyIrLr3UZTzVhZXFmTqhhUA68tAsUvTzQA==",
+  "dgSpecHash": "83AMOhTPd/gQiueu1W/4ML6IGIDJzMELott7HOmUQfo3VNSEwpzID2cJ2zmpFZmXJf8BBCVioabXAjhWATuFTg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Kams\\Desktop\\A_projects\\sem7\\git_dotnet\\si.net_projekt\\front\\front.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/mpiekarski/RiderProjects/si.net_projekt/front/front.csproj",
+  "expectedPackageFiles": [
+    "/home/mpiekarski/.nuget/packages/csvhelper/27.2.1/csvhelper.27.2.1.nupkg.sha512"
+  ],
   "logs": []
 }

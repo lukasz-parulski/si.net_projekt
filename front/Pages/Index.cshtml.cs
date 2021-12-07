@@ -23,6 +23,8 @@ namespace front.Pages
         public List<SensorReading> myList = new List<SensorReading>();
         public List<int> Label = new List<int>();
         public List<double> Data = new List<double>();
+        [BindProperty]
+        public int Number { get; set; }
 
         public IndexModel(ILogger<IndexModel> logger,ExportService<SensorReading> export)
         {
@@ -30,7 +32,7 @@ namespace front.Pages
 			_export = export;
         }
 
-         public async Task OnGet()
+         public async Task OnGet(int myId)
         {
             using (var client = new System.Net.Http.HttpClient())
             {
@@ -39,12 +41,29 @@ namespace front.Pages
             var response = await client.SendAsync(request);
             var responseContent = await response.Content.ReadAsStringAsync();
             myList = JsonSerializer.Deserialize<List<SensorReading>>(responseContent);
-            Data = myList.Select(item => item.value).ToList();
-            Label = Enumerable.Range(1, myList.Count).ToList();
+            if (Number>0)
+            {
+                myList = myList.Where(e=>e.sensorId==Number).ToList();
+                Data = myList.Select(item => item.value).ToList();
+                Label = Enumerable.Range(1, myList.Count).ToList();
+            }
+            else
+            {
+                Data = myList.Select(item => item.value).ToList();
+                Label = Enumerable.Range(1, myList.Count).ToList();
+            }
+            
 			Console.WriteLine("get");
 			_export.ExportCSV(myList,"temperature");
 			_export.ExportJSON(myList,"temperature");
             }
         }
+
+         public void OnPostEdit(int sensorId)
+         {
+             myList = myList.Where(e=>e.sensorId==1).ToList();
+             Data = myList.Select(item => item.value).ToList();
+             Label = Enumerable.Range(1, myList.Count).ToList();
+         }
     }
 }

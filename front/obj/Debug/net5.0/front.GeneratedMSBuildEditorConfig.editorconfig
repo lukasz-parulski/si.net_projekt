@@ -7,4 +7,4 @@ build_property.PublishSingleFile =
 build_property.IncludeAllContentForSelfExtract = 
 build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
 build_property.RootNamespace = front
-build_property.ProjectDir = c:\Users\Kams\Desktop\A_projects\sem7\dotnet\si.net_projekt\front\
+build_property.ProjectDir = /home/mpiekarski/RiderProjects/si.net_projekt/front/

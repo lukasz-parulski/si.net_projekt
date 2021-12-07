@@ -1,33 +1,68 @@
 {
   "version": 3,
   "targets": {
-    "net5.0": {}
+    "net5.0": {
+      "CsvHelper/27.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/net5.0/CsvHelper.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/CsvHelper.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CsvHelper/27.2.1": {
+      "sha512": "uS5ix5hL9gL5taiAG//CScyJa8Fn1ZOh3FDhDvf4laboESFs84mCNropfp7PIt8xCkyQofljFpqu1B5UnSXjyA==",
+      "type": "package",
+      "path": "csvhelper/27.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "csvhelper.27.2.1.nupkg.sha512",
+        "csvhelper.nuspec",
+        "lib/net45/CsvHelper.dll",
+        "lib/net45/CsvHelper.xml",
+        "lib/net47/CsvHelper.dll",
+        "lib/net47/CsvHelper.xml",
+        "lib/net5.0/CsvHelper.dll",
+        "lib/net5.0/CsvHelper.xml",
+        "lib/net6.0/CsvHelper.dll",
+        "lib/net6.0/CsvHelper.xml",
+        "lib/netstandard2.0/CsvHelper.dll",
+        "lib/netstandard2.0/CsvHelper.xml",
+        "lib/netstandard2.1/CsvHelper.dll",
+        "lib/netstandard2.1/CsvHelper.xml"
+      ]
+    }
+  },
   "projectFileDependencyGroups": {
-    "net5.0": []
+    "net5.0": [
+      "CsvHelper >= 27.2.1"
+    ]
   },
   "packageFolders": {
-    "C:\\Users\\Kams\\.nuget\\packages\\": {}
+    "/home/mpiekarski/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kams\\Desktop\\A_projects\\sem7\\git_dotnet\\si.net_projekt\\front\\front.csproj",
+      "projectUniqueName": "/home/mpiekarski/RiderProjects/si.net_projekt/front/front.csproj",
       "projectName": "front",
-      "projectPath": "C:\\Users\\Kams\\Desktop\\A_projects\\sem7\\git_dotnet\\si.net_projekt\\front\\front.csproj",
-      "packagesPath": "C:\\Users\\Kams\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kams\\Desktop\\A_projects\\sem7\\git_dotnet\\si.net_projekt\\front\\obj\\",
+      "projectPath": "/home/mpiekarski/RiderProjects/si.net_projekt/front/front.csproj",
+      "packagesPath": "/home/mpiekarski/.nuget/packages/",
+      "outputPath": "/home/mpiekarski/RiderProjects/si.net_projekt/front/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Kams\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/home/mpiekarski/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -45,6 +80,12 @@
     "frameworks": {
       "net5.0": {
         "targetAlias": "net5.0",
+        "dependencies": {
+          "CsvHelper": {
+            "target": "Package",
+            "version": "[27.2.1, )"
+          }
+        },
         "imports": [
           "net461",
           "net462",
@@ -63,7 +104,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.402\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
       }
     }
   }
