@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Exceptions;
 
 namespace api.Rabbit
 {
@@ -23,7 +25,16 @@ namespace api.Rabbit
     {
         if (_connection == null || _connection.IsOpen == false)
         {
-            _connection = _connectionFactory.CreateConnection();
+            while(true) {
+                try {
+                    _connection = _connectionFactory.CreateConnection();
+                    Console.WriteLine("Connected to rabbitmq.");
+                    break;
+                } catch(BrokerUnreachableException ex)
+                {
+                    Thread.Sleep(10000);
+                }
+            }
         }
 
         if (Channel == null || Channel.IsOpen == false)
