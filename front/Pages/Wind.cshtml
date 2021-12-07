@@ -1,5 +1,6 @@
 ﻿@page
-@model IndexModel
+@model front.Pages.Wind
+
 @{
     ViewData["Title"] = "Home page";
 }
@@ -46,7 +47,7 @@
             data: {
                 labels: @Html.Raw(Json.Serialize(Model.Label)),
                 datasets: [{
-                    label: 'temperature',
+                    label: 'wind',
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     fill: false,

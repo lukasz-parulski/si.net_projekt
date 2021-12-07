@@ -10,6 +10,7 @@ using front.Services;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.IO;
+using System.Net;
 using System.Text;
 using CsvHelper;
 
@@ -19,11 +20,9 @@ namespace front.Pages
     {
         private readonly ILogger<IndexModel> _logger;
         private readonly ExportService<WeatherForecast> _export;
-        public List<WeatherForecast> myList = new List<WeatherForecast>();
+        public List<SensorReading> myList = new List<SensorReading>();
         public List<int> Label = new List<int>();
-        public List<int> Data = new List<int>();
-        public List<int> DataF = new List<int>();
-        
+        public List<double> Data = new List<double>();
 
         public IndexModel(ILogger<IndexModel> logger,ExportService<WeatherForecast> export)
         {
@@ -36,16 +35,15 @@ namespace front.Pages
             using (var client = new System.Net.Http.HttpClient())
             {
             var request = new System.Net.Http.HttpRequestMessage();
-            request.RequestUri = new Uri("http://api:80/WeatherForecast");
+            request.RequestUri = new Uri("http://api:80/api/temperature");
             var response = await client.SendAsync(request);
             var responseContent = await response.Content.ReadAsStringAsync();
-            myList = JsonSerializer.Deserialize<List<WeatherForecast>>(responseContent);
-            Data = myList.Select(item => item.temperatureC).ToList();
-			DataF = myList.Select(item => item.temperatureF).ToList();
-			Label = Enumerable.Range(1, myList.Count).ToList();
+            myList = JsonSerializer.Deserialize<List<SensorReading>>(responseContent);
+            Data = myList.Select(item => item.value).ToList();
+            Label = Enumerable.Range(1, myList.Count).ToList();
 			Console.WriteLine("get");
-			_export.ExportCSV(myList,"mojanazwa");
-			_export.ExportJSON(myList,"mojanazwa");
+			//_export.ExportCSV(myList,"mojanazwa");
+			//_export.ExportJSON(myList,"mojanazwa");
             }
         }
     }
