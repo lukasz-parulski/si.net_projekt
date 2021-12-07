@@ -19,12 +19,12 @@ namespace front.Pages
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
-        private readonly ExportService<WeatherForecast> _export;
+        private readonly ExportService<SensorReading> _export;
         public List<SensorReading> myList = new List<SensorReading>();
         public List<int> Label = new List<int>();
         public List<double> Data = new List<double>();
 
-        public IndexModel(ILogger<IndexModel> logger,ExportService<WeatherForecast> export)
+        public IndexModel(ILogger<IndexModel> logger,ExportService<SensorReading> export)
         {
             _logger = logger;
 			_export = export;
@@ -42,8 +42,8 @@ namespace front.Pages
             Data = myList.Select(item => item.value).ToList();
             Label = Enumerable.Range(1, myList.Count).ToList();
 			Console.WriteLine("get");
-			//_export.ExportCSV(myList,"mojanazwa");
-			//_export.ExportJSON(myList,"mojanazwa");
+			_export.ExportCSV(myList,"temperature");
+			_export.ExportJSON(myList,"temperature");
             }
         }
     }
