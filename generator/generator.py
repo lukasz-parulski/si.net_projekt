@@ -1,4 +1,5 @@
 ﻿import pika
+from pika.exceptions import AMQPConnectionError
 import threading
 import random
 import time
@@ -23,9 +24,16 @@ def generate(type, minVal, maxVal, host):
     x = random.random() * deltaVal
     x += minVal
     print(f"{type} generator start")
-    connection_params = pika.ConnectionParameters(host=host)
-    connection = pika.BlockingConnection(connection_params)
-    channel = connection.channel()
+    while(True):
+        try:
+            connection_params = pika.ConnectionParameters(host=host)
+            connection = pika.BlockingConnection(connection_params)
+            channel = connection.channel()
+            print("Connected to rabbitmq.")
+            break
+        except AMQPConnectionError:
+            time.sleep(10)
+        
     channel.queue_declare(queue=QUEUE_NAME, durable=True, exclusive=False, auto_delete=False)
     for i in range(TIMES_PER_SEC*60*HOW_LONG_IN_MIN):#sendPerSecXSecsInMinXIleMins
         x1 = random.random()
