@@ -25,7 +25,8 @@ namespace api.Rabbit
     {
         if (_connection == null || _connection.IsOpen == false)
         {
-            while(true) {
+            var tries = 10;
+            while((tries--) > 0) {
                 try {
                     _connection = _connectionFactory.CreateConnection();
                     Console.WriteLine("Connected to rabbitmq.");

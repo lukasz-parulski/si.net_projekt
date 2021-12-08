@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading.Tasks;
 using api.Model;
-using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;

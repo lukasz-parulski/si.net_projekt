@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using api.Model;
 using Microsoft.Extensions.Hosting;
 using MongoDB.Driver;
 using RabbitMQ.Client;
@@ -18,7 +19,7 @@ namespace api.Rabbit
             try
             {
                 var consumer = new AsyncEventingBasicConsumer(Channel);
-                consumer.Received += OnReceive<String>;
+                consumer.Received += OnReceive<SensorReading>;
                 Channel.BasicConsume(queue: "main_queue", autoAck: false, consumer: consumer);
             }
             catch (Exception ex)
