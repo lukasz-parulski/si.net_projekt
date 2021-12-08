@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using front.Models;
 using front.Services;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc;
 
 namespace front.Pages
 {
@@ -21,7 +22,8 @@ namespace front.Pages
             _export = export;
         }
         
-        public async Task OnGet()
+        [HttpGet("{myId}")]
+        public async Task OnGet([FromQuery]int myId)
         {
             using (var client = new System.Net.Http.HttpClient())
             {
@@ -30,8 +32,59 @@ namespace front.Pages
                 var response = await client.SendAsync(request);
                 var responseContent = await response.Content.ReadAsStringAsync();
                 myList = JsonSerializer.Deserialize<List<SensorReading>>(responseContent);
-                Data = myList.Select(item => item.value).ToList();
-                Label = Enumerable.Range(1, myList.Count).ToList();
+                if (myId>0)
+                {
+                    if(myId==8){
+                        myList = myList.OrderBy(e=>e.value).ToList();
+                        Data = myList.Select(item => item.value).ToList();
+                        Label = Enumerable.Range(1, myList.Count).ToList();
+                    }
+                    else
+                    {
+                        myList = myList.Where(e=>e.sensorId==myId).ToList();
+                        Data = myList.Select(item => item.value).ToList();
+                        Label = Enumerable.Range(1, myList.Count).ToList();
+                    }	
+                }
+                else
+                {
+                    Data = myList.Select(item => item.value).ToList();
+                    Label = Enumerable.Range(1, myList.Count).ToList();
+                }
+                Console.WriteLine("get");
+                _export.ExportCSV(myList,"wind");
+                _export.ExportJSON(myList,"wind");
+            }
+        }
+        [HttpPost("{myId}")]
+        public async Task OnPost([FromQuery]int myId)
+        {
+            using (var client = new System.Net.Http.HttpClient())
+            {
+                var request = new System.Net.Http.HttpRequestMessage();
+                request.RequestUri = new Uri("http://api:80/api/wind");
+                var response = await client.SendAsync(request);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                myList = JsonSerializer.Deserialize<List<SensorReading>>(responseContent);
+                if (myId>0)
+                {
+                    if(myId==8){
+                        myList = myList.OrderBy(e=>e.value).ToList();
+                        Data = myList.Select(item => item.value).ToList();
+                        Label = Enumerable.Range(1, myList.Count).ToList();
+                    }
+                    else
+                    {
+                        myList = myList.Where(e=>e.sensorId==myId).ToList();
+                        Data = myList.Select(item => item.value).ToList();
+                        Label = Enumerable.Range(1, myList.Count).ToList();
+                    }	
+                }
+                else
+                {
+                    Data = myList.Select(item => item.value).ToList();
+                    Label = Enumerable.Range(1, myList.Count).ToList();
+                }
                 Console.WriteLine("get");
                 _export.ExportCSV(myList,"wind");
                 _export.ExportJSON(myList,"wind");

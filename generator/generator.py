@@ -58,7 +58,7 @@ def generate(type, minVal, maxVal, host):
         if random.random() < tempo:
             x -= x1
         else:
-            x += x1         
+            x += x1   
         if type != BEARS:
             for j in range(NUMBER_OF_SENSORS):
                 x1 = random.random() - 0.5
