@@ -22,34 +22,45 @@ namespace api.Controllers
 
         [Route("temperature")]
         [HttpGet]
-        public List<SensorReading> GetTemperature()
+        public List<SensorReadingDto> GetTemperature()
         {
             var collection = database.GetCollection<SensorReading>(CollectionTypes.TEMPERATURE_COLLECTION);
-            return collection.Find(_ => true).ToList();
+            return ConvertToDto(collection.Find(_ => true).ToList());
         }
         
         [Route("pressure")]
         [HttpGet]
-        public List<SensorReading> GetPressure()
+        public List<SensorReadingDto> GetPressure()
         {
             var collection = database.GetCollection<SensorReading>(CollectionTypes.PRESSURE_COLLECTION);
-            return collection.Find(_ => true).ToList();
+            return ConvertToDto(collection.Find(_ => true).ToList());
         }
         
         [Route("wind")]
         [HttpGet]
-        public List<SensorReading> GetWind()
+        public List<SensorReadingDto> GetWind()
         {
             var collection = database.GetCollection<SensorReading>(CollectionTypes.WIND_COLLECTION);
-            return collection.Find(_ => true).ToList();
+            return ConvertToDto(collection.Find(_ => true).ToList());
         }
         
         [Route("bears")]
         [HttpGet]
-        public List<SensorReading> GetBears()
+        public List<SensorReadingDto> GetBears()
         {
             var collection = database.GetCollection<SensorReading>(CollectionTypes.BEARS_COLLECTION);
-            return collection.Find(_ => true).ToList();
+            return ConvertToDto(collection.Find(_ => true).ToList());
+        }
+        
+        [NonAction]
+        private List<SensorReadingDto> ConvertToDto(List<SensorReading> sensorReadings)
+        {
+            List<SensorReadingDto> sensorReadingsDto = new List<SensorReadingDto>();
+            sensorReadings.ForEach(x =>
+            {
+                sensorReadingsDto.Add(new SensorReadingDto(x));
+            });
+            return sensorReadingsDto;
         }
     }
 }
