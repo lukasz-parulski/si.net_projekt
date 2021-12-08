@@ -27,7 +27,8 @@ WIND = "wind"
 PRES = "pressure"
 BEARS = "bears"
 
-HOST = 'rabbitmq.local'
+HOST = 'localhost'
+PORT = 17172
 
 def generate(type, minVal, maxVal, host):
     deltaVal = maxVal - minVal
@@ -38,7 +39,7 @@ def generate(type, minVal, maxVal, host):
     print(f"{type} generator start")
     while(True):
         try:
-            connection_params = pika.ConnectionParameters(host=host)
+            connection_params = pika.ConnectionParameters(host=host, port=PORT)
             connection = pika.BlockingConnection(connection_params)
             channel = connection.channel()
             print("Connected to rabbitmq.")
@@ -127,7 +128,7 @@ def send_one_data():
     y = input("Podaj wartosc do wyslania: ")
     while(True):
         try:
-            connection_params = pika.ConnectionParameters(host=HOST)
+            connection_params = pika.ConnectionParameters(host=HOST, port=PORT)
             connection = pika.BlockingConnection(connection_params)
             channel = connection.channel()
             print("Connected to rabbitmq.")
